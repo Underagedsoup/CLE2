@@ -10,38 +10,38 @@
     <title>Home</title>
 </head>
 <body>
-    <div class="container-fluid bg-black">
+    <div class="container-fluid p-0 m-0 bg-black">
         <div class="row">
             <ul class="col-md-12 nav d-flex justify-content-around align-items-center">
                 <li class="nav-brand">
                     <img src="images/SRDC-Logo.png" alt="">
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-maroon" href="#">Lessen</a>
+                    <a class="nav-link text-maroon" href="schedule">Lessen</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-maroon" href="#">Workshops</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-maroon" href="#">Parties</a>
+                    <a class="nav-link text-maroon" href="parties">Parties</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-maroon" href="#">Shows</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-maroon" href="#">Inloggen</a>
+                    <a class="nav-link text-maroon" href="login.php">Inloggen</a>
                 </li>
             </ul>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 d-flex justify-content-center">
                 <img src="images/SRDC-Banner.png" alt="" class="img-fluid">
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 btn-group">
-                <a class="btn btn-maroon">Over ons</a>
-                <a class="btn btn-maroon">Contact</a>
+                <a class="btn btn-maroon border border-dark">Over ons</a>
+                <a class="btn btn-maroon border border-dark">Contact</a>
             </div>
         </div>
     </div>
