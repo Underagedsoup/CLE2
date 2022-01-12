@@ -10,9 +10,9 @@
     <title>Home</title>
 </head>
 <body>
-    <div class="container-fluid p-0 m-0 bg-black">
-        <div class="row">
-            <ul class="col-md-12 nav d-flex justify-content-around align-items-center">
+    <div class="container-fluid">
+        <div class="row bg-black">
+            <ul class="col-md-12 nav p-0 d-flex justify-content-around align-items-center">
                 <li class="nav-brand">
                     <img src="images/SRDC-Logo.png" alt="">
                 </li>
@@ -33,13 +33,13 @@
                 </li>
             </ul>
         </div>
-        <div class="row">
-            <div class="col-md-12 d-flex justify-content-center">
+        <div class="row bg-black">
+            <div class="col-md-12 p-0 d-flex justify-content-center">
                 <img src="images/SRDC-Banner.png" alt="" class="img-fluid">
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 btn-group">
+        <div class="row bg-black">
+            <div class="col-md-12 p-0 btn-group">
                 <a class="btn btn-maroon border border-dark">Over ons</a>
                 <a class="btn btn-maroon border border-dark">Contact</a>
             </div>
