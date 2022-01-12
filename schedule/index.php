@@ -38,36 +38,20 @@ require_once "calendar.php";
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3><a href=""><</a> <?php echo $title; ?> <a href="">></a></h3>
+                <h3><a href="?year=<?=$prev['year'];?>&week=<?=$prev['week'];?>"><</a> <?php echo $title; ?> <a href="?year=<?=$next['year'];?>&week=<?=$next['week'];?>">></a></h3>
                 
-                <table class="table table-bordered">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th>Maandag</th>
-                            <th>Dinsdag</th>
-                            <th>Woensdag</th>
-                            <th>Donderdag</th>
-                            <th>Vrijdag</th>
-                            <th>Zaterdag</th>
-                            <th>Zondag</th>
+                            <?php foreach ($week as $day) { ?>
+                                <th class="text-center"><?= $day['day']; ?><br><?= $day['date']; ?></th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <?php foreach ($week as $day) { ?>
-                                <?php if (!empty($day)) { ?>
-                                    <?php if ($day['date'] > $today) { ?>
-                                        <td>
-                                            <?= $day['number'] ?>
-                                        </td>
-                                    <?php } else { ?>
-                                        <td>
-                                            <?= $day['number'] ?>
-                                        </td>
-                                    <?php } ?>
-                                <?php } else { ?>
-                                    <td></td>
-                                <?php } ?>
+                                <td>list of lessons for that day</td>
                             <?php } ?>
                         </tr>
                     </tbody>

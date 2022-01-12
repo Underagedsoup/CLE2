@@ -24,11 +24,12 @@ $day_count = 7;
 $week = [];
 $day = [];
 
-for ($x=0; $x < $day_count; $x++) {
-    $day['title'] = $date->format('l');
-    $day['number'] = $date->format('Y-m-d');
-    $day['date'] = $date->format('Y-m-d');
+for ($x=1; $x <= $day_count; $x++) {
+    $day['day'] = $date->format('l');
+    $day['date'] = $date->format('j');
+    $day['full_date'] = $date->format('Y-m-j');
     
     array_push($week, $day);
+    $date->modify('+1 day');
 }
 ?>
