@@ -28,6 +28,7 @@ $prev = ['week' => $yw-1, 'year' => $year];
 $next = ['week' => $yw+1, 'year' => $year];
 
 $day_count = 7;
+$hour_count = 23;
 
 $week = [];
 $day = [];
@@ -36,8 +37,27 @@ for ($x=1; $x <= $day_count; $x++) {
     $day['day'] = $date->format('l');
     $day['date'] = $date->format('j');
     $day['full_date'] = $date->format('Y-m-j');
+
+    $hour = [];
+    $lessons = getAllLessons($db);
+    for ($y=0; $y <= $hour_count; $y++) { 
+        $hour['time'] = date("H:i", mktime($y, 0, 0, 0, 0, 0));
+        foreach ($lessons as $lesson) {
+            if ($y == date('H', strtotime($lesson['start_datetime']))) {
+                $hour['lessons'][] = $lesson;
+            }
+        }
+
+        $day['hours'][] = $hour;
+        $hour = [];
+    }
     
     array_push($week, $day);
+    $day = [];
+    
     $date->modify('+1 day');
 }
+
+//Close connection
+mysqli_close($db);
 ?>

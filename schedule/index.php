@@ -65,7 +65,13 @@ require_once "calendar.php";
                     <tbody class="border border-maroon">
                         <tr>
                             <?php foreach ($week as $day) { ?>
-                                <td>list of lessons for that day</td>
+                                <td>
+                                    <?php foreach ($day['hours'] as $hour) { ?>
+                                        <div class="text-center">
+                                            <?= $hour['time']; ?>
+                                        </div>
+                                    <?php } ?>
+                                </td>
                             <?php } ?>
                         </tr>
                     </tbody>

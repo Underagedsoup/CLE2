@@ -49,7 +49,7 @@ $db = mysqli_connect($host, $user, $password, $database)
             $datetime = $row['start_datetime'];
         }
 
-        $lsnQuery = "SELECT 10 FROM `lessons` WHERE start_datetime >= '$datetime'";
+        $lsnQuery = "SELECT * FROM `lessons` WHERE start_datetime >= '$datetime' LIMIT 10";
         $lsnResult = mysqli_query($db, $lsnQuery) or die ('Error: ' . $lsnQuery);
 
         $lessons = [];
@@ -59,7 +59,10 @@ $db = mysqli_connect($host, $user, $password, $database)
         
         $query = "";
         $result = null;
+        print_r($lessons);
         for ($x = 0; $x < count($lessons); $x++) {
+            $lesson_id = $lessons[$x]['id'];
+
             $query = "INSERT INTO reservations (lesson_id, name, phone, email)
                       VALUES ('$lesson_id', '$name', '$phone', '$email')";
             $result = mysqli_query($db, $query) or die('Error: '.mysqli_error($db). ' with query ' . $query);
