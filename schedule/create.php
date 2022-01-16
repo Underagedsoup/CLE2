@@ -19,10 +19,10 @@ if (isset($_POST['submit'])) {
     require_once "../includes/form-validation.php";
 
     if (empty($errors)) {
-        $result = insertReservation($db, $lesson_id, $name, $phone, $email);
+        $result = insertReservations($db, $lesson_id, $name, $phone, $email);
 
         if ($result) {
-            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/CLE/schedule/create.php');
+            header('Location: http://' . $_SERVER['HTTP_HOST'] . '/CLE/schedule/');
             exit;
         } else {
             $errors['db'] = 'Something went wrong in your database query: ' . mysqli_error($db);
