@@ -56,15 +56,27 @@ $db = mysqli_connect($host, $user, $password, $database)
         while ($row = mysqli_fetch_assoc($lsnResult)) {
             $lessons[] = $row;
         }
+
+        $startDate = date('Y-m-d', strtotime($lessons[0]['start_datetime']));
+        $endDate = date('Y-m-d', strtotime($lessons[9]['start_datetime']));
+
+        $crsQuery = "INSERT INTO courses (start_date, end_date)
+                     VALUES ('$startDate', '$endDate')";
+
+        $course_id = null;
+        if (mysqli_query($db, $crsQuery)) {
+            $course_id = mysqli_insert_id($db);
+          } else {
+            echo 'Error: '.mysqli_error($db). ' with query ' . $crsQuery;
+          }
         
         $query = "";
         $result = null;
-        print_r($lessons);
         for ($x = 0; $x < count($lessons); $x++) {
             $lesson_id = $lessons[$x]['id'];
 
-            $query = "INSERT INTO reservations (lesson_id, name, phone, email)
-                      VALUES ('$lesson_id', '$name', '$phone', '$email')";
+            $query = "INSERT INTO reservations (course_id, lesson_id, name, phone, email)
+                      VALUES ('$course_id', '$lesson_id', '$name', '$phone', '$email')";
             $result = mysqli_query($db, $query) or die('Error: '.mysqli_error($db). ' with query ' . $query);
 
             if (!$result) {
