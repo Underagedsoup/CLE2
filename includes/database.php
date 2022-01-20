@@ -1,9 +1,28 @@
 <?php
 require_once "database-info.php";
 
+session_start();
+        
 $db = mysqli_connect($host, $user, $password, $database)
     or die("Error: " . mysqli_connect_error());;
 
+    function login(mysqli $db, $email, $password) {
+        $query = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+        $result = mysqli_query($db, $query) or die ('Error: ' . $query );
+
+        $data = [
+            'user' => null,
+            'error' => ''
+        ];
+        if (mysqli_num_rows($result) == 1) {
+            $data['user'] = mysqli_fetch_assoc($result);
+        } else {
+            $data['errors'] = 'Login failed';
+        }
+        
+        return $data;
+    }
+    
     function getAllLessons(mysqli $db) {
         $query = "SELECT * FROM `lessons` WHERE start_datetime >= CURDATE()";
         $result = mysqli_query($db, $query) or die ('Error: ' . $query );
@@ -38,6 +57,32 @@ $db = mysqli_connect($host, $user, $password, $database)
         }
 
         return $lessons;
+    }
+
+    function getLesson(mysqli $db, $lessonId) {
+        $query = "SELECT * FROM lessons WHERE id = '$lessonId'";
+        $result = mysqli_query($db, $query) or die ('Error: ' . $query );
+
+        return $result;
+    }
+
+    function getReservations(mysqli $db) {
+        $query = "SELECT * FROM `reservations`";
+        $result = mysqli_query($db, $query) or die ('Error: ' . $query );
+        
+        $reservations = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $reservations[] = $row;
+        }
+
+        return $reservations;
+    }
+
+    function getReservation(mysqli $db, $reservationId) {
+        $query = "SELECT * FROM reservations WHERE id = '$reservationId'";
+        $result = mysqli_query($db, $query) or die ('Error: ' . $query);
+
+        return $result;
     }
 
     function insertReservations(mysqli $db, $lesson_id, $name, $phone, $email) {
@@ -86,3 +131,22 @@ $db = mysqli_connect($host, $user, $password, $database)
 
         return $result;
     }
+
+    function updateReservation(mysqli $db, $id, $lesson_id, $name, $phone, $email) {
+        $query = "UPDATE reservations
+                  SET lesson_id='$lesson_id', name='$name', phone='$phone', email='$email'
+                  WHERE id=$id";
+        $result = mysqli_query($db, $query) or die('Error: '.mysqli_error($db). ' with query ' . $query);
+
+        return $result;
+    }
+
+    function deleteReservation(mysqli $db, $id) {
+        $query = "DELETE FROM reservations WHERE id = '$id'";
+        $result = mysqli_query($db, $query) or die('Error: '.mysqli_error($db). ' with query ' . $query);
+
+        return $result;
+    }
+    
+// Set your timezone!!
+date_default_timezone_set('Europe/Amsterdam');

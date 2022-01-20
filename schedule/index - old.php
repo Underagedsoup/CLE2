@@ -1,10 +1,6 @@
 <?php
 require_once "../includes/database.php";
-
-$reservations = getReservations($db);
-
-//Close connection
-mysqli_close($db);
+require_once "calendar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,43 +50,67 @@ mysqli_close($db);
                 <?php } ?>
             </ul>
         </div>
-        <div class="row py-3">
-            <div class="col-md-12">
+        <div class="row py-3 d-flex justify-content-around">
+            <div class="col-md-3 text-center">
+                <span class="btn text-maroon"><?= $titles['yearmonth']; ?></span>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="btn-group border border-maroon rounded-pill" role="group">
+                    <a href="?year=<?=$prev['year'];?>&week=<?=$prev['week'];?>" class="btn btn-outline-maroon"><</a>
+                    <button type="button" class="btn btn-outline-maroon"><?= $titles['week']; ?></button>
+                    <a href="?year=<?=$next['year'];?>&week=<?=$next['week'];?>" class="btn btn-outline-maroon">></a>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
                 <a href="create.php" class="btn btn-maroon rounded-pill">Cursus registreren</a>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
-            <div class="col-md-12">
+            <div class="col-md-1">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th>
+                                <br>
+                                <br>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <?php for ($x=0; $x <= $hour_count; $x++) { ?>
+                                    <div class="text-center">
+                                        <?= date("H:i", mktime($x, 0, 0, 0, 0, 0)); ?>
+                                    </div>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-9">
                 <table class="table table-borderless">
                     <thead class="border border-maroon">
                         <tr>
-                            <th>#</th>
-                            <th>Naam</th>
-                            <th>Telefoonnummer</th>
-                            <th>Email</th>
-                            <th>Les</th>
-                            <th colspan="2"></th>
+                            <?php foreach ($week as $day) { ?>
+                                <th class="text-center"><?= $day['day']; ?><br><?= $day['date']; ?></th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody class="border border-maroon">
-                        <?php foreach ($reservations as $index => $reservation) { ?>
-                            <tr>
-                                <td><?= $index+1 ?></td>
-                                <td><?= $reservation['name'] ?></td>
-                                <td><?= $reservation['phone'] ?></td>
-                                <td><?= $reservation['email'] ?></td>
-                                <td><?= $reservation['lesson_id'] ?></td>
-                                <td><a href="details.php?id=<?= $reservation['id']; ?>">Details</a></td>
-                                <td><a href="edit.php?id=<?= $reservation['id']; ?>">Bewerken</a></td>
-                                <td><a href="delete.php?id=<?= $reservation['id']; ?>">Annuleren</a></td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                    <tfoot class="border border-maroon">
                         <tr>
-                            <td colspan="9">&copy; Reservations</td>
+                            <?php foreach ($week as $day) { ?>
+                                <td>
+                                    <?php foreach ($day['hours'] as $hour) { ?>
+                                        <div class="text-center">
+                                            <?= isset($hour['lessons']) ? $hour['time'] : ''; ?>
+                                        </div>
+                                    <?php } ?>
+                                </td>
+                            <?php } ?>
                         </tr>
-                    </tfoot>
+                    </tbody>
                 </table>
             </div>
         </div>

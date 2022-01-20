@@ -1,6 +1,12 @@
 <?php
 //Check if data is valid & generate error if not so
 $errors = [];
+if (isset($_POST['id'])) {
+    if ($id == "") {
+        $errors['id'] = 'No id set';
+    }
+}
+
 if (isset($_POST['lesson_id'])) {
     if ($lesson_id == "") {
         $errors['lesson_id'] = 'Lesson must be chosen';
@@ -30,5 +36,21 @@ if (isset($_POST['email'])) {
 
     if ($email == "") {
         $errors['email'] = 'Email cannot be empty';
+    }
+}
+
+if (isset($_POST['register_password'])) {
+    if (!preg_match('@[A-Z]@', $registerPassword)) {
+        $errors['register_password'] = 'No uppercase in the password';
+    }
+    
+    if (!preg_match('@[a-z]@', $registerPassword)) {
+        $errors['register_password'] = 'No lowercase in the password';
+    }
+    if (!preg_match('@[0-9]@', $registerPassword)) {
+        $errors['register_password'] = 'No numbers in the password';
+    }
+    if (strlen($registerPassword) < 8) {
+        $errors['register_password'] = 'Password needs to be longer than 8';
     }
 }
