@@ -21,8 +21,13 @@
             <a class="nav-link text-maroon dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Admin</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Profiel</a></li>
+                <li><a class="dropdown-item" href="http://<?= $_SERVER['HTTP_HOST']; ?>/CLE/register.php">Registreer nieuwe gebruiker</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="http://<?= $_SERVER['HTTP_HOST']; ?>/CLE/logout.php?user=<?= $_SESSION['user']; ?>">Uitloggen</a></li>
+                <li>
+                    <form method="post" action="http://<?= $_SERVER['HTTP_HOST']; ?>/CLE/logout.php">
+                        <input type="submit" name="submit" class="dropdown-item" value="Uitloggen">
+                    </form>
+                </li>
             </ul>
         </li>
     <?php } else { ?>

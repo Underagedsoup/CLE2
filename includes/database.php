@@ -7,22 +7,36 @@ $db = mysqli_connect($host, $user, $password, $database)
     or die("Error: " . mysqli_connect_error());;
 
     function login(mysqli $db, $email, $password) {
-        $query = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $query = "SELECT * FROM users WHERE email='$email'";
         $result = mysqli_query($db, $query) or die ('Error: ' . $query );
 
-        $data = [
-            'user' => null,
-            'error' => ''
-        ];
-        if (mysqli_num_rows($result) == 1) {
-            $data['user'] = mysqli_fetch_assoc($result);
+        $user = null;
+        $row = mysqli_fetch_assoc($result);
+
+        if ($row == null) {
+            $checkPassword = $row['password'];
+            if (password_verify($password, $checkPassword)) {
+                $user = $row;
+            } else {
+                $user = 'Login failed';
+            }
         } else {
-            $data['errors'] = 'Login failed';
+            $user = 'Login failed';
         }
         
-        return $data;
+        return $user;
     }
     
+    function register(mysqli $db, $name, $registerPassword, $phone, $email) {
+        $hash = password_hash($registerPassword, PASSWORD_DEFAULT);
+        $query = "INSERT INTO users (name, password, phone, email)
+                      VALUES ('$name', '$hash', '$phone', '$email')";
+        $result = mysqli_query($db, $query) or die('Error: '.mysqli_error($db). ' with query ' . $query);
+
+        return $result;
+    }
+
     function getAllLessons(mysqli $db) {
         $query = "SELECT * FROM `lessons` WHERE start_datetime >= CURDATE()";
         $result = mysqli_query($db, $query) or die ('Error: ' . $query );

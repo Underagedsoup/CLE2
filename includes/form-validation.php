@@ -39,6 +39,12 @@ if (isset($_POST['email'])) {
     }
 }
 
+if (isset($_POST['password'])) {
+    if ($password == "") {
+        $errors['password'] = 'Password cannot be empty';
+    }
+}
+
 if (isset($_POST['register_password'])) {
     if (!preg_match('@[A-Z]@', $registerPassword)) {
         $errors['register_password'] = 'No uppercase in the password';
@@ -52,5 +58,8 @@ if (isset($_POST['register_password'])) {
     }
     if (strlen($registerPassword) < 8) {
         $errors['register_password'] = 'Password needs to be longer than 8';
+    }
+    if ($registerPassword == "") {
+        $errors['register_password'] = 'Password cannot be empty';
     }
 }

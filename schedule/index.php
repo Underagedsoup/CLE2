@@ -3,6 +3,16 @@ require_once "../includes/database.php";
 
 $reservations = getReservations($db);
 
+for ($x=0; $x < count($reservations); $x++) {
+    $result = getLesson($db, $reservations[$x]['lesson_id']);
+    
+    if (mysqli_num_rows($result) == 1) {
+        $reservations[$x]['lesson'] = mysqli_fetch_assoc($result);
+    } else {
+        $reservations[$x]['lesson'] = '';
+    }
+}
+
 //Close connection
 mysqli_close($db);
 ?>
@@ -36,21 +46,23 @@ mysqli_close($db);
                             <th>Naam</th>
                             <th>Telefoonnummer</th>
                             <th>Email</th>
-                            <th>Les</th>
-                            <th colspan="2"></th>
+                            <th>Lestijden</th>
+                            <th <?= isset($_SESSION['user']) ? '' : 'colspan="3"'; ?>></th>
                         </tr>
                     </thead>
                     <tbody class="border border-maroon">
                         <?php foreach ($reservations as $index => $reservation) { ?>
                             <tr>
                                 <td><?= $index+1 ?></td>
-                                <td><?= $reservation['name'] ?></td>
-                                <td><?= $reservation['phone'] ?></td>
-                                <td><?= $reservation['email'] ?></td>
-                                <td><?= $reservation['lesson_id'] ?></td>
+                                <td><?= $reservation['name']; ?></td>
+                                <td><?= $reservation['phone']; ?></td>
+                                <td><?= $reservation['email']; ?></td>
+                                <td><?= date('H:i', strtotime($reservation['lesson']['start_datetime'])) . ' - ' . date('H:i | j-m-Y', strtotime($reservation['lesson']['end_datetime'])); ?></td>
                                 <td><a href="details.php?id=<?= $reservation['id']; ?>">Details</a></td>
-                                <td><a href="edit.php?id=<?= $reservation['id']; ?>">Bewerken</a></td>
-                                <td><a href="delete.php?id=<?= $reservation['id']; ?>">Annuleren</a></td>
+                                <?php if (isset($_SESSION['user'])) { ?>
+                                    <td><a href="edit.php?id=<?= $reservation['id']; ?>">Bewerken</a></td>
+                                    <td><a href="delete.php?id=<?= $reservation['id']; ?>">Annuleren</a></td>
+                                <?php } ?>
                             </tr>
                         <?php } ?>
                     </tbody>
