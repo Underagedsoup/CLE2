@@ -22,7 +22,8 @@ mysqli_close($db);
         </div>
         <div class="row bg-black">
             <div class="col-md-12 p-0 d-flex justify-content-center">
-                <img src="images/SRDC-Banner.png" alt="" class="img-fluid">
+                <img src="images/SRDC-Banner.png" alt="" class="img-fluid position-relative">
+                <a href="schedule/create.php" class="btn btn-maroon position-absolute top-50 start-50 translate-middle">Proefles registreren</a>
             </div>
         </div>
         <div class="row bg-black">

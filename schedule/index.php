@@ -34,7 +34,7 @@ mysqli_close($db);
         </div>
         <div class="row py-3">
             <div class="col-md-12">
-                <a href="create.php" class="btn btn-maroon rounded-pill">Cursus registreren</a>
+                <a href="create.php" class="btn btn-maroon rounded-pill">Cursus/Proefles registreren</a>
             </div>
         </div>
         <div class="row d-flex justify-content-center">

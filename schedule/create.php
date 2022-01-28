@@ -5,9 +5,11 @@
 require_once "../includes/database.php";
 
 //Get lessons from the database with an SQL query
+$trialLessons = getTrialLessons($db);
 $lessons = getLessons($db);
 
 if (isset($_POST['submit'])) {
+    $trial_lesson = mysqli_escape_string($db, $_POST['trial']);
     $lesson_id = mysqli_escape_string($db, $_POST['lesson_id']);
     $name = mysqli_escape_string($db, $_POST['name']);
     $phone = mysqli_escape_string($db, $_POST['phone']);
@@ -16,7 +18,7 @@ if (isset($_POST['submit'])) {
     require_once "../includes/form-validation.php";
 
     if (empty($errors)) {
-        $result = insertReservations($db, $lesson_id, $name, $phone, $email);
+        $result = insertReservations($db, $trial_lesson, $lesson_id, $name, $phone, $email);
 
         if ($result) {
             header('Location: http://' . $_SERVER['HTTP_HOST'] . '/CLE/schedule/');
@@ -41,6 +43,17 @@ mysqli_close($db);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
     <title>Create Reservation</title>
+    <script>
+        function isTrialLesson() {
+            if (trialCheck.checked) {
+                trialLessons.style.display = "block";
+                lessons.style.display = "none";
+            } else {
+                trialLessons.style.display = "none";
+                lessons.style.display = "block";
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container-fluid">
@@ -55,8 +68,18 @@ mysqli_close($db);
         <div class="row py-3 d-flex justify-content-center">
             <div class="col-md-10">
                 <form action="" method="post" enctype="multipart/form-data">
+                    <div class="mb-3 form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" name="trial" class="form-check-input" id="trialLesson" onclick="isTrialLesson()">Proefles nemen?
+                        </label>
+                    </div>
                     <div class="mb-3">
                         <label for="lessons" class="form-label">Start van de cursus</label>
+                        <select name="lesson_id" class="form-select" id="trialLessons">
+                            <?php foreach ($trialLessons as $lesson) { ?>
+                                <option value="<?= $lesson['id']; ?>" <?= isset($lesson_id) && $lesson['id'] == $lesson_id ? 'selected' : '' ?>><?= date('H:i \o\n l jS F Y', strtotime($lesson['start_datetime'])); ?></option>
+                            <?php } ?>
+                        </select>
                         <select name="lesson_id" class="form-select" id="lessons">
                             <?php foreach ($lessons as $lesson) { ?>
                                 <option value="<?= $lesson['id']; ?>" <?= isset($lesson_id) && $lesson['id'] == $lesson_id ? 'selected' : '' ?>><?= date('H:i \o\n l jS F Y', strtotime($lesson['start_datetime'])); ?></option>
@@ -88,4 +111,17 @@ mysqli_close($db);
         </div>
     </div>
 </body>
+<script>
+    let trialCheck = document.getElementById("trialLesson");
+    let trialLessons = document.getElementById("trialLessons");
+    let lessons = document.getElementById("lessons");
+    
+    if (trialCheck.checked) {
+        trialLessons.style.display = "block";
+        lessons.style.display = "none";
+    } else {
+        trialLessons.style.display = "none";
+        lessons.style.display = "block";
+    }
+</script>
 </html>
