@@ -13,6 +13,14 @@ if (isset($_POST['lesson_id'])) {
     }
 }
 
+if (isset($_POST['trial_lesson'])) {
+    if ($trial_lesson != mysqli_escape_string($db, true)) {
+        if ($trial_lesson != mysqli_escape_string($db, false)) {
+            $errors['trial_lesson'] = 'Trial invalid';
+        }
+    }
+}
+
 if (isset($_POST['name'])) {
     if ($name == "") {
         $errors['name'] = 'Name cannot be empty';

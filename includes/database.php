@@ -100,12 +100,12 @@ $db = mysqli_connect($host, $user, $password, $database)
     }
 
     function insertReservations(mysqli $db, $trial_lesson, $lesson_id, $name, $phone, $email) {
-        if ($trial_lesson) {
+        if ($trial_lesson == mysqli_escape_string($db, true)) {
             $query = "INSERT INTO reservations (course_id, lesson_id, name, phone, email)
                     VALUES (null, '$lesson_id', '$name', '$phone', '$email')";
             $result = mysqli_query($db, $query) or die('Error: '.mysqli_error($db). ' with query ' . $query);
         } else {
-            $flQuery = "SELECT * FROM `lessons` WHERE id=$lesson_id AND trial_lesson=$trial_lesson";
+            $flQuery = "SELECT * FROM `lessons` WHERE id=$lesson_id AND trial_lesson=0";
             $flResult = mysqli_query($db, $flQuery) or die ('Error: ' . $flQuery);
 
             $datetime = null;

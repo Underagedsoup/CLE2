@@ -9,7 +9,7 @@ $trialLessons = getTrialLessons($db);
 $lessons = getLessons($db);
 
 if (isset($_POST['submit'])) {
-    $trial_lesson = mysqli_escape_string($db, $_POST['trial']);
+    isset($_POST['trial_lesson']) ? $trial_lesson = mysqli_escape_string($db, true) : $trial_lesson = mysqli_escape_string($db, false);
     $lesson_id = mysqli_escape_string($db, $_POST['lesson_id']);
     $name = mysqli_escape_string($db, $_POST['name']);
     $phone = mysqli_escape_string($db, $_POST['phone']);
@@ -70,8 +70,9 @@ mysqli_close($db);
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="mb-3 form-check">
                         <label class="form-check-label">
-                            <input type="checkbox" name="trial" class="form-check-input" id="trialLesson" onclick="isTrialLesson()">Proefles nemen?
+                            <input type="checkbox" name="trial_lesson" class="form-check-input" id="trialLesson" onclick="isTrialLesson()" <?= isset($trial_lesson) && $trial_lesson == true ? 'checked' : '' ?>>Proefles nemen?
                         </label>
+                        <span class="text-danger"><?= isset($errors['trial_lesson']) ? $errors['trial_lesson'] : ''; ?></span>
                     </div>
                     <div class="mb-3">
                         <label for="lessons" class="form-label">Start van de cursus</label>
