@@ -1,3 +1,4 @@
+<!-- Navigation bar -->
 <ul class="col-md-12 nav p-0 d-flex justify-content-around align-items-center">
     <li class="nav-brand">
         <a href="http://<?= $_SERVER['HTTP_HOST']; ?>/CLE/">

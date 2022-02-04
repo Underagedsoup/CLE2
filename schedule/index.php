@@ -1,6 +1,8 @@
 <?php
+// Require DB settings with connection variable
 require_once "../includes/database.php";
 
+//Get reservations from the database with an SQL query
 $reservations = getReservations($db);
 
 for ($x=0; $x < count($reservations); $x++) {

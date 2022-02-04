@@ -1,15 +1,16 @@
 <?php
-/** @var mysqli $db */
-
-//Require DB settings with connection variable
+// Require DB settings with connection variable
 require_once "../includes/database.php";
 
+// Check if form has been submitted else check if id is set
 if (isset($_POST['submit'])) {
     $id = mysqli_escape_string($db, $_POST['id']);
     
+    // Require form-validations
     require_once "../includes/form-validation.php";
 
     if (empty($errors)) {
+        // delete reservation from database table
         $result = deleteReservation($db, $id);
 
         if ($result) {
@@ -23,11 +24,13 @@ if (isset($_POST['submit'])) {
 } else if (isset($_GET['id']) || $_GET['id'] != '') {
     $reservationId = mysqli_escape_string($db, $_GET['id']);
 
+    // Get reservation from database table
     $result = getReservation($db, $reservationId);
 
     if (mysqli_num_rows($result) == 1) {
         $reservation = mysqli_fetch_assoc($result);
         
+        // Get lesson from database
         $lResult = getLesson($db, $reservation['lesson_id']);
 
         if (mysqli_num_rows($lResult) == 1) {
@@ -62,6 +65,7 @@ mysqli_close($db);
 <body>
     <div class="container-fluid">
         <div class="row bg-black">
+            <!-- Require navigation-bar -->
             <?php require_once "../includes/navigation-bar.php"; ?>
         </div>
         <div class="row py-3 d-flex justify-content-center">
@@ -76,6 +80,7 @@ mysqli_close($db);
                     <div class="mb-3">
                         <p>Weet u zeker dat u de reservatie voor les van <?= date('l jS F Y \o\n H:i', strtotime($reservation['lesson']['start_datetime'])) . ' - ' . date('H:i', strtotime($reservation['lesson']['end_datetime'])); ?> wilt verwijderen?</p>
                     </div>
+                    <!-- Submit form -->
                     <div class="mb-3">
                         <input type="hidden" name="id" value="<?= $reservation['id'] ?>"/>
                         <input type="submit" name="submit" class="btn btn-primary" value="Submit" aria-describedby="contactHelp">

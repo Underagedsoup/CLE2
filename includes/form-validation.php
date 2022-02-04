@@ -1,6 +1,7 @@
 <?php
-//Check if data is valid & generate error if not so
+// Check if data isset and valid. Generate error if not true.
 $errors = [];
+
 if (isset($_POST['id'])) {
     if ($id == "") {
         $errors['id'] = 'No id set';
@@ -13,6 +14,7 @@ if (isset($_POST['lesson_id'])) {
     }
 }
 
+// If trial_lesson is not mysqli_escape_string($db, boolean), generate error.
 if (isset($_POST['trial_lesson'])) {
     if ($trial_lesson != mysqli_escape_string($db, true)) {
         if ($trial_lesson != mysqli_escape_string($db, false)) {
@@ -27,6 +29,7 @@ if (isset($_POST['name'])) {
     }
 }
 
+// If phone contains letters, generate error.
 if (isset($_POST['phone'])) {
     if (!is_numeric(preg_replace('/[\s]+/', '', $phone))) {
         $errors['phone'] = 'Phone cannot contain letters';
@@ -37,6 +40,7 @@ if (isset($_POST['phone'])) {
     }
 }
 
+// If email contains invalid emailadres, generate error.
 if (isset($_POST['email'])) {
     if (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $email)) {
         $errors['email'] = 'Email invalid';
@@ -53,6 +57,7 @@ if (isset($_POST['password'])) {
     }
 }
 
+// If register_password does not contain uppercase letters, lowercase letters, numbers, or is shorter than 8, generate error.
 if (isset($_POST['register_password'])) {
     if (!preg_match('@[A-Z]@', $registerPassword)) {
         $errors['register_password'] = 'No uppercase in the password';

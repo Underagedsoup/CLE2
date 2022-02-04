@@ -1,9 +1,8 @@
 <?php
-/** @var mysqli $db */
-
-//Require DB settings with connection variable
+// Require DB settings with connection variable
 require_once "../includes/database.php";
 
+// Check if id is set
 if (isset($_GET['id']) || $_GET['id'] != '') {
     $reservationId = mysqli_escape_string($db, $_GET['id']);
 

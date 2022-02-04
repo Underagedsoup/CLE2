@@ -1,12 +1,11 @@
 <?php
-/** @var mysqli $db */
-
-//Require DB settings with connection variable
+// Require DB settings with connection variable
 require_once "../includes/database.php";
 
 //Get lessons from the database with an SQL query
 $lessons = getLessons($db);
 
+// Check if form has been submitted else check if id is set
 if (isset($_POST['submit'])) {
     $id = mysqli_escape_string($db, $_POST['id']);
     $lesson_id = mysqli_escape_string($db, $_POST['lesson_id']);
@@ -14,6 +13,7 @@ if (isset($_POST['submit'])) {
     $phone = mysqli_escape_string($db, $_POST['phone']);
     $email = mysqli_escape_string($db, $_POST['email']);
     
+    // Require form-validations
     require_once "../includes/form-validation.php";
 
     if (empty($errors)) {
