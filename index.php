@@ -1,4 +1,5 @@
 <?php
+// Require DB settings with connection variable
 require_once "includes/database.php";
 
 //Close connection
@@ -18,6 +19,7 @@ mysqli_close($db);
 <body>
     <div class="container-fluid">
         <div class="row bg-black">
+            <!-- Require navigation-bar -->
             <?php require_once "includes/navigation-bar.php"; ?>
         </div>
         <div class="row bg-black">

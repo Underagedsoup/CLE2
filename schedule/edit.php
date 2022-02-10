@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
     require_once "../includes/form-validation.php";
 
     if (empty($errors)) {
+        // update reservation from database table
         $result = updateReservation($db, $id, $lesson_id, $name, $phone, $email);
 
         if ($result) {
@@ -28,8 +29,10 @@ if (isset($_POST['submit'])) {
 
     }
 } else if (isset($_GET['id']) || $_GET['id'] != '') {
+    // Get id of reservation
     $reservationId = mysqli_escape_string($db, $_GET['id']);
 
+    // Get reservation from database table
     $result = getReservation($db, $reservationId);
 
     if (mysqli_num_rows($result) == 1) {
@@ -60,6 +63,7 @@ mysqli_close($db);
 <body>
     <div class="container-fluid">
         <div class="row bg-black">
+            <!-- Require navigation-bar -->
             <?php require_once "../includes/navigation-bar.php"; ?>
         </div>
         <div class="row py-3 d-flex justify-content-center">
@@ -69,7 +73,9 @@ mysqli_close($db);
         </div>
         <div class="row py-3 d-flex justify-content-center">
             <div class="col-md-10">
+                <!-- edit form -->
                 <form action="" method="post" enctype="multipart/form-data">
+                    <!-- Lesson list -->
                     <div class="mb-3">
                         <label for="lessons" class="form-label">Start van de cursus</label>
                         <select name="lesson_id" class="form-select" id="lessons">
@@ -79,21 +85,25 @@ mysqli_close($db);
                         </select>
                         <span class="text-danger"><?= isset($errors['lesson_id']) ? $errors['lesson_id'] : ''; ?></span>
                     </div>
+                    <!-- Name input -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" name="name" class="form-control" id="name" value="<?= isset($name) ? htmlentities($name) : $reservation['name'] ?>">
                         <span class="text-danger"><?= isset($errors['name']) ? $errors['name'] : ''; ?></span>
                     </div>
+                    <!-- Email input -->
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
                         <input type="text" name="email" class="form-control" id="email" value="<?= isset($email) ? htmlentities($email) : $reservation['email'] ?>">
                         <span class="text-danger"><?= isset($errors['email']) ? $errors['email'] : ''; ?></span>
                     </div>
+                    <!-- Phone input -->
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
                         <input type="text" name="phone" class="form-control" id="phone" value="<?= isset($phone) ? htmlentities($phone) : $reservation['phone'] ?>">
                         <span class="text-danger"><?= isset($errors['phone']) ? $errors['phone'] : ''; ?></span>
                     </div>
+                    <!-- Submit form -->
                     <div class="mb-3">
                         <input type="hidden" name="id" value="<?= $reservation['id'] ?>"/>
                         <input type="submit" name="submit" class="btn btn-primary" value="Submit" aria-describedby="contactHelp">

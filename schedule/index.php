@@ -6,6 +6,7 @@ require_once "../includes/database.php";
 $reservations = getReservations($db);
 
 for ($x=0; $x < count($reservations); $x++) {
+    // Get lesson from database
     $result = getLesson($db, $reservations[$x]['lesson_id']);
     
     if (mysqli_num_rows($result) == 1) {
@@ -32,6 +33,7 @@ mysqli_close($db);
 <body>
     <div class="container-fluid">
         <div class="row bg-black">
+            <!-- Require navigation-bar -->
             <?php require_once "../includes/navigation-bar.php"; ?>
         </div>
         <div class="row py-3">

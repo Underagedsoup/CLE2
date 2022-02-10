@@ -22,6 +22,7 @@ if (isset($_POST['submit'])) {
 
     }
 } else if (isset($_GET['id']) || $_GET['id'] != '') {
+    // Get id of reservation
     $reservationId = mysqli_escape_string($db, $_GET['id']);
 
     // Get reservation from database table
@@ -76,6 +77,7 @@ mysqli_close($db);
         <div class="row py-3 d-flex justify-content-center">
             <div class="col-md-10">
                 <h2>Verwijder de reservatie</h2>
+                <!-- delete form -->
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <p>Weet u zeker dat u de reservatie voor les van <?= date('l jS F Y \o\n H:i', strtotime($reservation['lesson']['start_datetime'])) . ' - ' . date('H:i', strtotime($reservation['lesson']['end_datetime'])); ?> wilt verwijderen?</p>

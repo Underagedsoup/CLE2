@@ -71,6 +71,7 @@ mysqli_close($db);
         </div>
         <div class="row py-3 d-flex justify-content-center">
             <div class="col-md-10">
+                <!-- create form -->
                 <form action="" method="post" enctype="multipart/form-data">
                     <!-- Trial lesson checkbox -->
                     <div class="mb-3 form-check">
