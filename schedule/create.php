@@ -2,6 +2,8 @@
 // Require DB settings with connection variable
 require_once "../includes/database.php";
 
+//Melvin was here
+
 // Get trial lessons and lessons from the database with SQL queries
 $trialLessons = getTrialLessons($db);
 $lessons = getLessons($db);
